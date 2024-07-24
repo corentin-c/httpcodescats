@@ -1,4 +1,4 @@
-package com.github.corentinc.httpcodescats.ui.screens
+package com.github.corentinc.httpcodescats.ui.screens.httpcodeslist
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,16 +7,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.github.corentinc.httpcodescats.ui.theme.HttpCodesCatsTheme
 
 @Composable
-fun HttpCodeListScreen() {
+fun HttpCodeListScreen(
+	viewModel: HttpCodesListViewModel = hiltViewModel()
+) {
 	LazyVerticalGrid(
 		modifier = Modifier.fillMaxSize(),
 		columns = GridCells.Adaptive(128.dp),

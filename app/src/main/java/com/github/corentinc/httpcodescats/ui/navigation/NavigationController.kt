@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.github.corentinc.httpcodescats.ui.screens.HttpCodeListScreen
+import com.github.corentinc.httpcodescats.ui.screens.httpcodeslist.HttpCodeListScreen
 
 
 private const val HTTP_CODE_LIST_SCREEN = "httpCodeListScreen"
