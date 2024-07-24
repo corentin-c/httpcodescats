@@ -21,14 +21,19 @@ import com.github.corentinc.httpcodescats.ui.theme.HttpCodesCatsTheme
 
 @Composable
 fun HttpCodeListScreen(
-	viewModel: HttpCodesListViewModel = hiltViewModel()
+	viewModel: HttpCodesListViewModel = hiltViewModel(),
+	onHttpCodeClicked: (code: Int) -> Unit
 ) {
 	val uiState = viewModel.uiState.collectAsState().value
-	HttpCodeListScreenContent(httpCodes = uiState.httpCodes)
+	HttpCodeListScreenContent(httpCodes = uiState.httpCodes,
+		onHttpCodeClicked = onHttpCodeClicked)
 }
 
 @Composable
-fun HttpCodeListScreenContent(httpCodes: List<HttpCode>?) {
+fun HttpCodeListScreenContent(
+	httpCodes: List<HttpCode>?,
+	onHttpCodeClicked: (code: Int) -> Unit
+) {
 	if (httpCodes != null) {
 		if (httpCodes.isNotEmpty()) {
 			LazyVerticalStaggeredGrid(
@@ -44,6 +49,9 @@ fun HttpCodeListScreenContent(httpCodes: List<HttpCode>?) {
 					items(httpCodes.size) { index ->
 						val httpCode = httpCodes[index]
 						Card(
+							onClick = {
+								onHttpCodeClicked(httpCode.code)
+							},
 							modifier = Modifier
 								.fillMaxSize()
 								.padding(4.dp),
@@ -80,7 +88,12 @@ fun HttpCodeListScreenContent(httpCodes: List<HttpCode>?) {
 @Composable
 fun HttpCodeListScreenPreviewWithContent() {
 	HttpCodesCatsTheme {
-		HttpCodeListScreenContent(httpCodes = HttpCode.httpCodes)
+		HttpCodeListScreenContent(
+			httpCodes = HttpCode.httpCodes,
+			onHttpCodeClicked = {
+				// empty
+			}
+		)
 	}
 }
 
@@ -88,7 +101,12 @@ fun HttpCodeListScreenPreviewWithContent() {
 @Composable
 fun HttpCodeListScreenPreviewNull() {
 	HttpCodesCatsTheme {
-		HttpCodeListScreenContent(httpCodes = null)
+		HttpCodeListScreenContent(
+			httpCodes = null,
+			onHttpCodeClicked = {
+				// empty
+			}
+		)
 	}
 }
 
@@ -96,6 +114,11 @@ fun HttpCodeListScreenPreviewNull() {
 @Composable
 fun HttpCodeListScreenPreviewEmpty() {
 	HttpCodesCatsTheme {
-		HttpCodeListScreenContent(httpCodes = emptyList())
+		HttpCodeListScreenContent(
+			httpCodes = emptyList(),
+			onHttpCodeClicked = {
+				// empty
+			}
+		)
 	}
 }

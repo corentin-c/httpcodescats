@@ -1,4 +1,4 @@
-package com.github.corentinc.httpcodescats.ui.screens.httpcodeslist
+package com.github.corentinc.httpcodescats.ui.screens.httpcodedetails
 
 import androidx.lifecycle.ViewModel
 import com.github.corentinc.httpcodescats.model.HttpCode
@@ -11,21 +11,23 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class HttpCodesListViewModel @Inject constructor(
-	httpCodesRepository: IHttpCodesRepository
+class HttpCodeDetailViewModel @Inject constructor(
+	private val httpCodesRepository: IHttpCodesRepository
 ) : ViewModel() {
+
 	private val uiStateFlow = MutableStateFlow(UiState())
 	val uiState: StateFlow<UiState> = uiStateFlow.asStateFlow()
 
-	init {
+	fun getHttpCodeDetails(code: Int) {
+		val httpCode = httpCodesRepository.getHttpCode(code)
 		uiStateFlow.update {
 			it.copy(
-				httpCodes = httpCodesRepository.getAllHttpCodes()
+				httpCode = httpCode
 			)
 		}
 	}
 
 	data class UiState(
-		var httpCodes: List<HttpCode>? = emptyList()
+		var httpCode: HttpCode? = null
 	)
 }
