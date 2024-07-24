@@ -1,51 +1,101 @@
 package com.github.corentinc.httpcodescats.ui.screens.httpcodeslist
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.github.corentinc.httpcodescats.model.HttpCode
 import com.github.corentinc.httpcodescats.ui.theme.HttpCodesCatsTheme
 
 @Composable
 fun HttpCodeListScreen(
 	viewModel: HttpCodesListViewModel = hiltViewModel()
 ) {
-	LazyVerticalGrid(
-		modifier = Modifier.fillMaxSize(),
-		columns = GridCells.Adaptive(128.dp),
-		contentPadding = PaddingValues(
-			start = 12.dp,
-			top = 16.dp,
-			end = 12.dp,
-			bottom = 16.dp
-		),
-		content = {
-			items(5) { index ->
-				Card(
-					modifier = Modifier
-						.padding(4.dp)
-						.fillMaxWidth(),
-				) {
-					Text("Kappa")
+	val uiState = viewModel.uiState.collectAsState().value
+	HttpCodeListScreenContent(httpCodes = uiState.httpCodes)
+}
+
+@Composable
+fun HttpCodeListScreenContent(httpCodes: List<HttpCode>?) {
+	if (httpCodes != null) {
+		if (httpCodes.isNotEmpty()) {
+			LazyVerticalStaggeredGrid(
+				modifier = Modifier.fillMaxSize(),
+				columns = StaggeredGridCells.Adaptive(128.dp),
+				contentPadding = PaddingValues(
+					start = 12.dp,
+					top = 16.dp,
+					end = 12.dp,
+					bottom = 16.dp
+				),
+				content = {
+					items(httpCodes.size) { index ->
+						val httpCode = httpCodes[index]
+						Card(
+							modifier = Modifier
+								.fillMaxSize()
+								.padding(4.dp),
+						) {
+							Column(
+								modifier = Modifier
+									.fillMaxSize()
+									.padding(4.dp),
+								horizontalAlignment = Alignment.CenterHorizontally
+							) {
+								Text(text = httpCode.code.toString(), textAlign = TextAlign.Center)
+								Text(text = httpCode.name, textAlign = TextAlign.Center)
+							}
+						}
+					}
 				}
-			}
+			)
+		} else {
+			Text(
+				modifier = Modifier.fillMaxSize(),
+				text = "Http codes retrieved but empty :("
+			)
 		}
-	)
+
+	} else {
+		Text(
+			modifier = Modifier.fillMaxSize(),
+			text = "Could not retrieve Http codes :("
+		)
+	}
 }
 
 @Preview(showBackground = true)
 @Composable
-fun HttpCodeListScreenPreview() {
+fun HttpCodeListScreenPreviewWithContent() {
 	HttpCodesCatsTheme {
-		HttpCodeListScreen()
+		HttpCodeListScreenContent(httpCodes = HttpCode.httpCodes)
+	}
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HttpCodeListScreenPreviewNull() {
+	HttpCodesCatsTheme {
+		HttpCodeListScreenContent(httpCodes = null)
+	}
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HttpCodeListScreenPreviewEmpty() {
+	HttpCodesCatsTheme {
+		HttpCodeListScreenContent(httpCodes = emptyList())
 	}
 }
