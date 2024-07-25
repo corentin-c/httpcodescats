@@ -74,6 +74,7 @@ dependencies {
 	annotationProcessor(libs.hilt.android.compiler)
 	implementation(libs.androidx.hilt.navigation.compose)
 	kapt(libs.hilt.android.compiler)
+	implementation(libs.glide)
 }
 
 kapt {
