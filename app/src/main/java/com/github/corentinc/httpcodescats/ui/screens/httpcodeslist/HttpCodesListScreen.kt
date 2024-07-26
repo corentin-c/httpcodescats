@@ -135,7 +135,7 @@ fun HttpCodeListScreenContent(
 									) {
 										GlideImage(
 											model = httpCode.imageUrl,
-											loading = placeholder(R.drawable.ic_launcher_foreground),
+											loading = placeholder(R.drawable.cat_loader),
 											contentScale = ContentScale.Crop,
 											contentDescription = "Cat image for http code ${httpCode.code}",
 											modifier = Modifier

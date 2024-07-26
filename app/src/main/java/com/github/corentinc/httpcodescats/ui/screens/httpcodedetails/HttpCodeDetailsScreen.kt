@@ -76,7 +76,7 @@ fun HttpCodeDetailsContent(
 			httpCode!! // always not null when loading is done
 			GlideImage(
 				model = httpCode.imageUrl,
-				loading = placeholder(R.drawable.ic_launcher_foreground),
+				loading = placeholder(R.drawable.cat_loader),
 				contentScale = ContentScale.FillWidth,
 				contentDescription = "Cat image for http code ${httpCode.code}",
 				modifier = Modifier
