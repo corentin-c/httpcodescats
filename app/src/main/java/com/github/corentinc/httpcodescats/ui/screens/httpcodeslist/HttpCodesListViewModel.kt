@@ -26,8 +26,21 @@ class HttpCodesListViewModel @Inject constructor(
 		}
 	}
 
+	fun onFilterChanged(newValue: String) {
+		uiStateFlow.update {
+			it.copy(
+				httpCodes = httpCodesRepository.getAllHttpCodes().filter { httpCode ->
+					httpCode.code.toString().startsWith(newValue)
+				},
+				isLoading = false,
+				filter = newValue
+			)
+		}
+	}
+
 	data class UiState(
 		var httpCodes: List<HttpCode> = emptyList(),
-		var isLoading: Boolean = true
+		var isLoading: Boolean = true,
+		var filter: String = ""
 	)
 }

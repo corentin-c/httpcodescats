@@ -10,8 +10,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +24,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,6 +35,8 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import com.github.corentinc.httpcodescats.R
 import com.github.corentinc.httpcodescats.model.HttpCode
+import com.github.corentinc.httpcodescats.ui.ClassicField
+import com.github.corentinc.httpcodescats.ui.ClassicFieldExtraParameters
 import com.github.corentinc.httpcodescats.ui.theme.HttpCodesCatsTheme
 
 @Composable
@@ -38,11 +46,16 @@ fun HttpCodeListScreen(
 	val uiState = viewModel.uiState.collectAsState().value
 	LaunchedEffect(key1 = Unit) {
 		viewModel.onStart()
+		viewModel.onFilterChanged(uiState.filter)
 	}
 	HttpCodeListScreenContent(
 		isLoading = uiState.isLoading,
 		httpCodes = uiState.httpCodes,
-		onHttpCodeClicked = onHttpCodeClicked
+		filter = uiState.filter,
+		onHttpCodeClicked = onHttpCodeClicked,
+		onFilterChanged = { newFilter ->
+			viewModel.onFilterChanged(newFilter)
+		}
 	)
 }
 
@@ -50,67 +63,103 @@ fun HttpCodeListScreen(
 fun HttpCodeListScreenContent(
 	isLoading: Boolean,
 	httpCodes: List<HttpCode>,
-	onHttpCodeClicked: (code: Int) -> Unit
+	filter: String,
+	onHttpCodeClicked: (code: Int) -> Unit,
+	onFilterChanged: (newFilter: String) -> Unit
 ) {
-	if (isLoading) {
-		Column(
-			verticalArrangement = Arrangement.Center,
-			horizontalAlignment = Alignment.CenterHorizontally,
-			modifier = Modifier
-				.fillMaxSize()
-		) {
-			CircularProgressIndicator()
-		}
-	} else {
-		if (httpCodes.isNotEmpty()) {
-			LazyVerticalStaggeredGrid(
-				modifier = Modifier
-					.background(MaterialTheme.colorScheme.background)
-					.fillMaxSize(),
-				columns = StaggeredGridCells.Adaptive(150.dp),
-				contentPadding = PaddingValues(
-					start = 12.dp, top = 16.dp, end = 12.dp, bottom = 16.dp
+	Column(
+		verticalArrangement = Arrangement.Center,
+		horizontalAlignment = Alignment.CenterHorizontally,
+		modifier = Modifier
+			.fillMaxSize()
+	) {
+		ClassicField(
+			modifier = Modifier.padding(12.dp),
+			placeholder = "Search for a code...",
+			value = filter,
+			onValueChange = { value ->
+				onFilterChanged(value)
+			},
+			classicFieldExtraParameters = ClassicFieldExtraParameters(
+				keyboardOptions = KeyboardOptions(
+					keyboardType = KeyboardType.Number,
+					imeAction = ImeAction.Go
 				),
-				content = {
-					items(httpCodes.size) { index ->
-						val httpCode = httpCodes[index]
-						Card(
-							onClick = {
-								onHttpCodeClicked(httpCode.code)
-							},
-							modifier = Modifier
-								.fillMaxSize()
-								.padding(8.dp),
-						) {
-							Column(
-								modifier = Modifier
-									.fillMaxSize()
-									.padding(8.dp),
-								horizontalAlignment = Alignment.CenterHorizontally
-							) {
-								GlideImage(
-									model = httpCode.imageUrl,
-									loading = placeholder(R.drawable.ic_launcher_foreground),
-									contentScale = ContentScale.Crop,
-									contentDescription = "Cat image for http code ${httpCode.code}",
+				trailingIcon = {
+					Icon(
+						Icons.Default.Search,
+						contentDescription = ""
+					)
+				}),
+		)
+		if (isLoading) {
+			Column(
+				verticalArrangement = Arrangement.Center,
+				horizontalAlignment = Alignment.CenterHorizontally,
+				modifier = Modifier.fillMaxSize()
+			) {
+				CircularProgressIndicator(
+				)
+			}
+		} else {
+			Column(
+				verticalArrangement = Arrangement.Center,
+				horizontalAlignment = Alignment.CenterHorizontally,
+				modifier = Modifier.fillMaxSize()
+			) {
+				if (httpCodes.isNotEmpty()) {
+					LazyVerticalStaggeredGrid(
+						modifier = Modifier
+							.background(MaterialTheme.colorScheme.background)
+							.fillMaxSize(),
+						columns = StaggeredGridCells.Adaptive(150.dp),
+						contentPadding = PaddingValues(
+							start = 12.dp, top = 16.dp, end = 12.dp, bottom = 16.dp
+						),
+						content = {
+							items(httpCodes.size) { index ->
+								val httpCode = httpCodes[index]
+								Card(
+									onClick = {
+										onHttpCodeClicked(httpCode.code)
+									},
 									modifier = Modifier
 										.fillMaxSize()
-										.padding(12.dp)
-										.fillMaxSize()
-								)
-								Text(
-									text = httpCode.name,
-									textAlign = TextAlign.Center,
-									style = MaterialTheme.typography.titleSmall
-								)
+										.padding(8.dp),
+								) {
+									Column(
+										modifier = Modifier
+											.fillMaxSize()
+											.padding(8.dp),
+										horizontalAlignment = Alignment.CenterHorizontally
+									) {
+										GlideImage(
+											model = httpCode.imageUrl,
+											loading = placeholder(R.drawable.ic_launcher_foreground),
+											contentScale = ContentScale.Crop,
+											contentDescription = "Cat image for http code ${httpCode.code}",
+											modifier = Modifier
+												.fillMaxSize()
+												.padding(12.dp)
+												.fillMaxSize()
+										)
+										Text(
+											text = httpCode.name,
+											textAlign = TextAlign.Center,
+											style = MaterialTheme.typography.titleSmall
+										)
+									}
+								}
 							}
-						}
-					}
-				})
-		} else {
-			Text(
-				modifier = Modifier.fillMaxSize(), text = "Http codes retrieved but empty :("
-			)
+						})
+				} else {
+					Text(
+						text = "No corresponding HTTP Code, search for something else like \"400\" !",
+						textAlign = TextAlign.Center,
+						color = MaterialTheme.colorScheme.primary
+					)
+				}
+			}
 		}
 	}
 }
@@ -122,7 +171,11 @@ fun HttpCodeListScreenPreviewWithContent() {
 		HttpCodeListScreenContent(
 			isLoading = false,
 			httpCodes = HttpCode.httpCodes,
+			filter = "",
 			onHttpCodeClicked = {
+				// empty
+			},
+			onFilterChanged = {
 				// empty
 			})
 	}
@@ -135,7 +188,11 @@ fun HttpCodeListScreenPreviewLoading() {
 		HttpCodeListScreenContent(
 			isLoading = true,
 			httpCodes = emptyList(),
+			filter = "",
 			onHttpCodeClicked = {
+				// empty
+			},
+			onFilterChanged = {
 				// empty
 			})
 	}
@@ -148,7 +205,11 @@ fun HttpCodeListScreenPreviewEmpty() {
 		HttpCodeListScreenContent(
 			isLoading = false,
 			httpCodes = emptyList(),
+			filter = "",
 			onHttpCodeClicked = {
+				// empty
+			},
+			onFilterChanged = {
 				// empty
 			})
 	}
