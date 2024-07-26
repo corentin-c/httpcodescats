@@ -1,6 +1,9 @@
 package com.github.corentinc.httpcodescats.ui.navigation
 
+import androidx.compose.foundation.background
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,7 +22,11 @@ fun NavigationController() {
 	val navigationController = rememberNavController()
 
 
-	NavHost(navController = navigationController, startDestination = HTTP_CODE_LIST_SCREEN) {
+	NavHost(
+		modifier = Modifier.background(MaterialTheme.colorScheme.background),
+		navController = navigationController,
+		startDestination = HTTP_CODE_LIST_SCREEN
+	) {
 		composable(
 			route = HTTP_CODE_LIST_SCREEN,
 			enterTransition = enterTransition,
