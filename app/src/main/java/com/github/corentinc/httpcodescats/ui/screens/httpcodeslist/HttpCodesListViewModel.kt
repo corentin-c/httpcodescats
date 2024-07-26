@@ -12,20 +12,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HttpCodesListViewModel @Inject constructor(
-	httpCodesRepository: IHttpCodesRepository
+	private val httpCodesRepository: IHttpCodesRepository
 ) : ViewModel() {
 	private val uiStateFlow = MutableStateFlow(UiState())
 	val uiState: StateFlow<UiState> = uiStateFlow.asStateFlow()
 
-	init {
+	fun onStart() {
 		uiStateFlow.update {
 			it.copy(
-				httpCodes = httpCodesRepository.getAllHttpCodes()
+				httpCodes = httpCodesRepository.getAllHttpCodes(),
+				isLoading = false
 			)
 		}
 	}
 
 	data class UiState(
-		var httpCodes: List<HttpCode>? = emptyList()
+		var httpCodes: List<HttpCode> = emptyList(),
+		var isLoading: Boolean = true
 	)
 }

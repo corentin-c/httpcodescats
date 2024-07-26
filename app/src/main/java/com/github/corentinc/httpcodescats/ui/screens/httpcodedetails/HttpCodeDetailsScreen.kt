@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,12 +18,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -32,6 +28,8 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import com.github.corentinc.httpcodescats.R
 import com.github.corentinc.httpcodescats.model.HttpCode
+import com.github.corentinc.httpcodescats.ui.LinkText
+import com.github.corentinc.httpcodescats.ui.LinkTextData
 import com.github.corentinc.httpcodescats.ui.theme.HttpCodesCatsTheme
 
 
@@ -45,6 +43,7 @@ fun HttpCodeDetailsScreen(
 	val uiState = viewModel.uiState.collectAsState().value
 
 	HttpCodeDetailsContent(
+		uiState.isLoading,
 		uiState.httpCode
 	)
 
@@ -53,6 +52,7 @@ fun HttpCodeDetailsScreen(
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun HttpCodeDetailsContent(
+	isLoading: Boolean,
 	httpCode: HttpCode?
 ) {
 	val context = LocalContext.current
@@ -63,7 +63,17 @@ fun HttpCodeDetailsContent(
 		verticalArrangement = Arrangement.SpaceEvenly,
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
-		httpCode?.let {
+		if (isLoading) {
+			Column(
+				verticalArrangement = Arrangement.Center,
+				horizontalAlignment = Alignment.CenterHorizontally,
+				modifier = Modifier
+					.fillMaxSize()
+			) {
+				CircularProgressIndicator()
+			}
+		} else {
+			httpCode!! // always not null when loading is done
 			GlideImage(
 				model = httpCode.imageUrl,
 				loading = placeholder(R.drawable.ic_launcher_foreground),
@@ -135,9 +145,8 @@ fun HttpCodeDetailsContent(
 				)
 
 			}
-		} ?: run {
-
 		}
+
 	}
 }
 
@@ -146,6 +155,7 @@ fun HttpCodeDetailsContent(
 fun HttpCodeDetailsPreview() {
 	HttpCodesCatsTheme {
 		HttpCodeDetailsContent(
+			isLoading = false,
 			HttpCode(
 				101,
 				"Test",
@@ -155,61 +165,17 @@ fun HttpCodeDetailsPreview() {
 	}
 }
 
-data class LinkTextData(
-	val text: String,
-	val tag: String? = null,
-	val annotation: String? = null,
-	val onClick: ((str: AnnotatedString.Range<String>) -> Unit)? = null,
-)
-
+@Preview(showBackground = true)
 @Composable
-fun LinkText(
-	linkTextData: List<LinkTextData>,
-	modifier: Modifier = Modifier,
-) {
-	val annotatedString = createAnnotatedString(linkTextData)
-
-	ClickableText(
-		text = annotatedString,
-		style = MaterialTheme.typography.bodyLarge,
-		onClick = { offset ->
-			linkTextData.forEach { annotatedStringData ->
-				if (annotatedStringData.tag != null && annotatedStringData.annotation != null) {
-					annotatedString.getStringAnnotations(
-						tag = annotatedStringData.tag,
-						start = offset,
-						end = offset,
-					).firstOrNull()?.let {
-						annotatedStringData.onClick?.invoke(it)
-					}
-				}
-			}
-		},
-		modifier = modifier,
-	)
-}
-
-@Composable
-private fun createAnnotatedString(data: List<LinkTextData>): AnnotatedString {
-	return buildAnnotatedString {
-		data.forEach { linkTextData ->
-			if (linkTextData.tag != null && linkTextData.annotation != null) {
-				pushStringAnnotation(
-					tag = linkTextData.tag,
-					annotation = linkTextData.annotation,
-				)
-				withStyle(
-					style = SpanStyle(
-						color = MaterialTheme.colorScheme.primary,
-						textDecoration = TextDecoration.Underline,
-					),
-				) {
-					append(linkTextData.text)
-				}
-				pop()
-			} else {
-				append(linkTextData.text)
-			}
-		}
+fun HttpCodeDetailsPreviewLoading() {
+	HttpCodesCatsTheme {
+		HttpCodeDetailsContent(
+			isLoading = true,
+			HttpCode(
+				101,
+				"Test",
+				"Super very long description that will probably take more than a line"
+			)
+		)
 	}
 }

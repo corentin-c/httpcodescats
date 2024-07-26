@@ -3,6 +3,7 @@
 package com.github.corentinc.httpcodescats.ui.screens.httpcodeslist
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,9 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,16 +36,32 @@ fun HttpCodeListScreen(
 	viewModel: HttpCodesListViewModel = hiltViewModel(), onHttpCodeClicked: (code: Int) -> Unit
 ) {
 	val uiState = viewModel.uiState.collectAsState().value
+	LaunchedEffect(key1 = Unit) {
+		viewModel.onStart()
+	}
 	HttpCodeListScreenContent(
-		httpCodes = uiState.httpCodes, onHttpCodeClicked = onHttpCodeClicked
+		isLoading = uiState.isLoading,
+		httpCodes = uiState.httpCodes,
+		onHttpCodeClicked = onHttpCodeClicked
 	)
 }
 
 @Composable
 fun HttpCodeListScreenContent(
-	httpCodes: List<HttpCode>?, onHttpCodeClicked: (code: Int) -> Unit
+	isLoading: Boolean,
+	httpCodes: List<HttpCode>,
+	onHttpCodeClicked: (code: Int) -> Unit
 ) {
-	if (httpCodes != null) {
+	if (isLoading) {
+		Column(
+			verticalArrangement = Arrangement.Center,
+			horizontalAlignment = Alignment.CenterHorizontally,
+			modifier = Modifier
+				.fillMaxSize()
+		) {
+			CircularProgressIndicator()
+		}
+	} else {
 		if (httpCodes.isNotEmpty()) {
 			LazyVerticalStaggeredGrid(
 				modifier = Modifier
@@ -79,7 +98,11 @@ fun HttpCodeListScreenContent(
 										.padding(12.dp)
 										.fillMaxSize()
 								)
-								Text(text = httpCode.name, textAlign = TextAlign.Center, style = MaterialTheme.typography.titleSmall)
+								Text(
+									text = httpCode.name,
+									textAlign = TextAlign.Center,
+									style = MaterialTheme.typography.titleSmall
+								)
 							}
 						}
 					}
@@ -89,11 +112,6 @@ fun HttpCodeListScreenContent(
 				modifier = Modifier.fillMaxSize(), text = "Http codes retrieved but empty :("
 			)
 		}
-
-	} else {
-		Text(
-			modifier = Modifier.fillMaxSize(), text = "Could not retrieve Http codes :("
-		)
 	}
 }
 
@@ -101,19 +119,25 @@ fun HttpCodeListScreenContent(
 @Composable
 fun HttpCodeListScreenPreviewWithContent() {
 	HttpCodesCatsTheme {
-		HttpCodeListScreenContent(httpCodes = HttpCode.httpCodes, onHttpCodeClicked = {
-			// empty
-		})
+		HttpCodeListScreenContent(
+			isLoading = false,
+			httpCodes = HttpCode.httpCodes,
+			onHttpCodeClicked = {
+				// empty
+			})
 	}
 }
 
 @Preview(showBackground = true)
 @Composable
-fun HttpCodeListScreenPreviewNull() {
+fun HttpCodeListScreenPreviewLoading() {
 	HttpCodesCatsTheme {
-		HttpCodeListScreenContent(httpCodes = null, onHttpCodeClicked = {
-			// empty
-		})
+		HttpCodeListScreenContent(
+			isLoading = true,
+			httpCodes = emptyList(),
+			onHttpCodeClicked = {
+				// empty
+			})
 	}
 }
 
@@ -121,8 +145,11 @@ fun HttpCodeListScreenPreviewNull() {
 @Composable
 fun HttpCodeListScreenPreviewEmpty() {
 	HttpCodesCatsTheme {
-		HttpCodeListScreenContent(httpCodes = emptyList(), onHttpCodeClicked = {
-			// empty
-		})
+		HttpCodeListScreenContent(
+			isLoading = false,
+			httpCodes = emptyList(),
+			onHttpCodeClicked = {
+				// empty
+			})
 	}
 }

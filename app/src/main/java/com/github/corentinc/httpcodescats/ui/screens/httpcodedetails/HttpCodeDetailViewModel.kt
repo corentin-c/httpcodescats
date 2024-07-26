@@ -22,12 +22,14 @@ class HttpCodeDetailViewModel @Inject constructor(
 		val httpCode = httpCodesRepository.getHttpCode(code)
 		uiStateFlow.update {
 			it.copy(
+				isLoading = false,
 				httpCode = httpCode
 			)
 		}
 	}
 
 	data class UiState(
+		var isLoading: Boolean = true,
 		var httpCode: HttpCode? = null
 	)
 }
