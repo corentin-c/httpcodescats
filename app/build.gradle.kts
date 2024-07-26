@@ -75,6 +75,7 @@ dependencies {
 	implementation(libs.androidx.hilt.navigation.compose)
 	kapt(libs.hilt.android.compiler)
 	implementation(libs.glide)
+	implementation(libs.customTabs)
 }
 
 kapt {
