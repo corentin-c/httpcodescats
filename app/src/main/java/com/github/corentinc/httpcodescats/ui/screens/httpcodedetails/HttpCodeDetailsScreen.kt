@@ -135,7 +135,7 @@ fun HttpCodeDetailsContent(
 							text = "Open source in browser",
 							tag = "source",
 							annotation = httpCode.source,
-							onClick = { it ->
+							onClick = {
 								val intent = CustomTabsIntent.Builder()
 									.build()
 								intent.launchUrl(context, Uri.parse(it.item))

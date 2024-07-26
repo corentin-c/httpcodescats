@@ -3,15 +3,20 @@
 package com.github.corentinc.httpcodescats.ui.screens.httpcodeslist
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
@@ -41,7 +46,9 @@ import com.github.corentinc.httpcodescats.ui.theme.HttpCodesCatsTheme
 
 @Composable
 fun HttpCodeListScreen(
-	viewModel: HttpCodesListViewModel = hiltViewModel(), onHttpCodeClicked: (code: Int) -> Unit
+	viewModel: HttpCodesListViewModel = hiltViewModel(),
+	onHttpCodeClicked: (code: Int) -> Unit,
+	onAboutClicked: () -> Unit
 ) {
 	val uiState = viewModel.uiState.collectAsState().value
 	LaunchedEffect(key1 = Unit) {
@@ -53,6 +60,7 @@ fun HttpCodeListScreen(
 		httpCodes = uiState.httpCodes,
 		filter = uiState.filter,
 		onHttpCodeClicked = onHttpCodeClicked,
+		onAboutClicked = onAboutClicked,
 		onFilterChanged = { newFilter ->
 			viewModel.onFilterChanged(newFilter)
 		}
@@ -65,6 +73,7 @@ fun HttpCodeListScreenContent(
 	httpCodes: List<HttpCode>,
 	filter: String,
 	onHttpCodeClicked: (code: Int) -> Unit,
+	onAboutClicked: () -> Unit,
 	onFilterChanged: (newFilter: String) -> Unit
 ) {
 	Column(
@@ -73,25 +82,41 @@ fun HttpCodeListScreenContent(
 		modifier = Modifier
 			.fillMaxSize()
 	) {
-		ClassicField(
-			modifier = Modifier.padding(12.dp),
-			placeholder = "Search for a code...",
-			value = filter,
-			onValueChange = { value ->
-				onFilterChanged(value)
-			},
-			classicFieldExtraParameters = ClassicFieldExtraParameters(
-				keyboardOptions = KeyboardOptions(
-					keyboardType = KeyboardType.Number,
-					imeAction = ImeAction.Go
-				),
-				trailingIcon = {
-					Icon(
-						Icons.Default.Search,
-						contentDescription = ""
-					)
-				}),
-		)
+		Row(
+			horizontalArrangement = Arrangement.SpaceEvenly,
+			verticalAlignment = Alignment.CenterVertically
+		) {
+			ClassicField(
+				modifier = Modifier.padding(12.dp),
+				placeholder = "Search for a code...",
+				value = filter,
+				onValueChange = { value ->
+					onFilterChanged(value)
+				},
+				classicFieldExtraParameters = ClassicFieldExtraParameters(
+					keyboardOptions = KeyboardOptions(
+						keyboardType = KeyboardType.Number,
+						imeAction = ImeAction.Go
+					),
+					trailingIcon = {
+						Icon(
+							imageVector = Icons.Default.Search,
+							contentDescription = "Search for http code"
+						)
+					}),
+			)
+			Icon(
+				modifier = Modifier
+					.clickable {
+						onAboutClicked()
+					}
+					.width(30.dp)
+					.height(30.dp),
+				imageVector = Icons.Default.Info,
+				tint = MaterialTheme.colorScheme.primary,
+				contentDescription = "About the app"
+			)
+		}
 		if (isLoading) {
 			Column(
 				verticalArrangement = Arrangement.Center,
@@ -177,6 +202,9 @@ fun HttpCodeListScreenPreviewWithContent() {
 			},
 			onFilterChanged = {
 				// empty
+			},
+			onAboutClicked = {
+				// empty
 			})
 	}
 }
@@ -194,6 +222,9 @@ fun HttpCodeListScreenPreviewLoading() {
 			},
 			onFilterChanged = {
 				// empty
+			},
+			onAboutClicked = {
+				// empty
 			})
 	}
 }
@@ -210,6 +241,9 @@ fun HttpCodeListScreenPreviewEmpty() {
 				// empty
 			},
 			onFilterChanged = {
+				// empty
+			},
+			onAboutClicked = {
 				// empty
 			})
 	}
