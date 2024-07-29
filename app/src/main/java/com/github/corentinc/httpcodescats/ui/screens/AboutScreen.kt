@@ -34,7 +34,6 @@ fun AboutScreen() {
 	) {
 		Text(
 			text = "Hello catventurer !",
-			color = MaterialTheme.colorScheme.onBackground,
 			style = MaterialTheme.typography.titleLarge
 		)
 		Spacer(modifier = Modifier.height(25.dp))
@@ -43,7 +42,6 @@ fun AboutScreen() {
 					"With this app, you can see all available HTTP status codes, " +
 					"search for them using the search bar on top of the list " +
 					"and get details on each of them by clicking on the card.",
-			color = MaterialTheme.colorScheme.onBackground,
 			style = MaterialTheme.typography.bodyLarge
 		)
 		Spacer(modifier = Modifier.height(25.dp))
@@ -110,7 +108,6 @@ fun AboutScreen() {
 		Spacer(modifier = Modifier.height(25.dp))
 		Text(
 			text = "Enjoy :)",
-			color = MaterialTheme.colorScheme.onBackground,
 			style = MaterialTheme.typography.bodyMedium
 		)
 	}

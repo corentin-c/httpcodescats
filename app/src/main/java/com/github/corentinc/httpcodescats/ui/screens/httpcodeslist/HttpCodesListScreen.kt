@@ -2,7 +2,6 @@
 
 package com.github.corentinc.httpcodescats.ui.screens.httpcodeslist
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -135,7 +134,6 @@ fun HttpCodeListScreenContent(
 				if (httpCodes.isNotEmpty()) {
 					LazyVerticalStaggeredGrid(
 						modifier = Modifier
-							.background(MaterialTheme.colorScheme.background)
 							.fillMaxSize(),
 						columns = StaggeredGridCells.Adaptive(150.dp),
 						contentPadding = PaddingValues(
@@ -180,8 +178,7 @@ fun HttpCodeListScreenContent(
 				} else {
 					Text(
 						text = "No corresponding HTTP Code, search for something else like \"400\" !",
-						textAlign = TextAlign.Center,
-						color = MaterialTheme.colorScheme.primary
+						textAlign = TextAlign.Center
 					)
 				}
 			}

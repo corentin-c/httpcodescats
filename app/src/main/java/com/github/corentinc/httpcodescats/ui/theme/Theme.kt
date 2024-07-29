@@ -91,7 +91,6 @@ private val DarkColorScheme = darkColorScheme(
 @Composable
 fun HttpCodesCatsTheme(
 	darkTheme: Boolean = isSystemInDarkTheme(),
-	dynamicColor: Boolean = true, // ignored
 	content: @Composable () -> Unit
 ) {
 	val colorScheme = when {

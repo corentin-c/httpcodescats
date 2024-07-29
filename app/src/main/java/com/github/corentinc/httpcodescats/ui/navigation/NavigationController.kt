@@ -1,9 +1,8 @@
 package com.github.corentinc.httpcodescats.ui.navigation
 
-import androidx.compose.foundation.background
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,51 +22,51 @@ private const val HTTP_CODE_ARGUMENT = "httpCodeArgument"
 fun NavigationController() {
 	val navigationController = rememberNavController()
 
-
-	NavHost(
-		modifier = Modifier.background(MaterialTheme.colorScheme.background),
-		navController = navigationController,
-		startDestination = HTTP_CODE_LIST_SCREEN
-	) {
-		composable(
-			route = HTTP_CODE_LIST_SCREEN,
-			enterTransition = enterTransition,
-			popEnterTransition = popEnterTransition,
-			exitTransition = exitTransition
+	Surface(color = MaterialTheme.colorScheme.surface) {
+		NavHost(
+			navController = navigationController,
+			startDestination = HTTP_CODE_LIST_SCREEN
 		) {
-			HttpCodeListScreen(
-				onHttpCodeClicked = { code: Int ->
-					navigationController.navigate("$HTTP_CODE_DETAILS_SCREEN/$code")
-				},
-				onAboutClicked = {
-					navigationController.navigate(ABOUT_SCREEN)
-				}
-			)
-		}
+			composable(
+				route = HTTP_CODE_LIST_SCREEN,
+				enterTransition = enterTransition,
+				popEnterTransition = popEnterTransition,
+				exitTransition = exitTransition
+			) {
+				HttpCodeListScreen(
+					onHttpCodeClicked = { code: Int ->
+						navigationController.navigate("$HTTP_CODE_DETAILS_SCREEN/$code")
+					},
+					onAboutClicked = {
+						navigationController.navigate(ABOUT_SCREEN)
+					}
+				)
+			}
 
-		composable(
-			route = "$HTTP_CODE_DETAILS_SCREEN/{$HTTP_CODE_ARGUMENT}",
-			arguments = listOf(
-				navArgument(HTTP_CODE_ARGUMENT) {
-					type = NavType.IntType
-					nullable = false
-				},
-			),
-			enterTransition = enterTransition,
-			popEnterTransition = popEnterTransition,
-			exitTransition = exitTransition
-		) { backStackEntry ->
-			val code = backStackEntry.arguments?.getInt(HTTP_CODE_ARGUMENT)!!
-			HttpCodeDetailsScreen(code)
-		}
+			composable(
+				route = "$HTTP_CODE_DETAILS_SCREEN/{$HTTP_CODE_ARGUMENT}",
+				arguments = listOf(
+					navArgument(HTTP_CODE_ARGUMENT) {
+						type = NavType.IntType
+						nullable = false
+					},
+				),
+				enterTransition = enterTransition,
+				popEnterTransition = popEnterTransition,
+				exitTransition = exitTransition
+			) { backStackEntry ->
+				val code = backStackEntry.arguments?.getInt(HTTP_CODE_ARGUMENT)!!
+				HttpCodeDetailsScreen(code)
+			}
 
-		composable(
-			route = ABOUT_SCREEN,
-			enterTransition = enterTransition,
-			popEnterTransition = popEnterTransition,
-			exitTransition = exitTransition
-		) {
-			AboutScreen()
+			composable(
+				route = ABOUT_SCREEN,
+				enterTransition = enterTransition,
+				popEnterTransition = popEnterTransition,
+				exitTransition = exitTransition
+			) {
+				AboutScreen()
+			}
 		}
 	}
 }

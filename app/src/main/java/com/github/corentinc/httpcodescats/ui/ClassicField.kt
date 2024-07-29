@@ -35,21 +35,6 @@ fun ClassicField(
 		enabled = enabled,
 		shape = RoundedCornerShape(5.dp),
 		trailingIcon = classicFieldExtraParameters.trailingIcon,
-		colors = TextFieldDefaults.colors(
-			focusedContainerColor = MaterialTheme.colorScheme.background,
-			unfocusedContainerColor = MaterialTheme.colorScheme.background,
-			disabledContainerColor = MaterialTheme.colorScheme.background,
-			errorContainerColor = MaterialTheme.colorScheme.background,
-			disabledTextColor = MaterialTheme.colorScheme.tertiary,
-			focusedTextColor = MaterialTheme.colorScheme.tertiary,
-			unfocusedTextColor = MaterialTheme.colorScheme.tertiary,
-			cursorColor = MaterialTheme.colorScheme.tertiary,
-			focusedIndicatorColor = MaterialTheme.colorScheme.tertiary,
-			selectionColors = TextSelectionColors(
-				handleColor = MaterialTheme.colorScheme.tertiary,
-				backgroundColor = Color.Transparent
-			)
-		),
 		value = value,
 		onValueChange = onValueChange,
 		visualTransformation = classicFieldExtraParameters.visualTransformation,
@@ -57,8 +42,7 @@ fun ClassicField(
 		keyboardActions = classicFieldExtraParameters.keyboardActions,
 		placeholder = {
 			Text(
-				placeholder,
-				color = MaterialTheme.colorScheme.tertiary,
+				placeholder
 			)
 		}
 	)

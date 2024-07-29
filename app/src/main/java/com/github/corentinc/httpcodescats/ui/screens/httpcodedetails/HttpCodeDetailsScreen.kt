@@ -91,13 +91,11 @@ fun HttpCodeDetailsContent(
 					text = "HTTP code : ",
 					textDecoration = TextDecoration.Underline,
 					textAlign = TextAlign.Center,
-					color = MaterialTheme.colorScheme.onBackground,
 					style = MaterialTheme.typography.titleMedium
 				)
 				Text(
 					text = httpCode.code.toString(),
 					textAlign = TextAlign.Center,
-					color = MaterialTheme.colorScheme.onBackground,
 					style = MaterialTheme.typography.bodyMedium
 				)
 				Spacer(modifier = Modifier.height(12.dp))
@@ -105,13 +103,11 @@ fun HttpCodeDetailsContent(
 					text = "Name : ",
 					textAlign = TextAlign.Center,
 					textDecoration = TextDecoration.Underline,
-					color = MaterialTheme.colorScheme.onBackground,
 					style = MaterialTheme.typography.titleMedium
 				)
 				Text(
 					text = httpCode.name,
 					textAlign = TextAlign.Center,
-					color = MaterialTheme.colorScheme.onBackground,
 					style = MaterialTheme.typography.bodyMedium
 				)
 				Spacer(modifier = Modifier.height(12.dp))
@@ -119,13 +115,11 @@ fun HttpCodeDetailsContent(
 					text = "Description : ",
 					textDecoration = TextDecoration.Underline,
 					textAlign = TextAlign.Center,
-					color = MaterialTheme.colorScheme.onBackground,
 					style = MaterialTheme.typography.titleMedium
 				)
 				Text(
 					text = httpCode.description,
 					textAlign = TextAlign.Center,
-					color = MaterialTheme.colorScheme.onBackground,
 					style = MaterialTheme.typography.bodyMedium
 				)
 				Spacer(modifier = Modifier.height(12.dp))
