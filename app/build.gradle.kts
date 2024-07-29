@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
 	alias(libs.plugins.android.application)
 	alias(libs.plugins.jetbrains.kotlin.android)
@@ -9,6 +12,16 @@ plugins {
 }
 
 android {
+	signingConfigs {
+		create("release") {
+			val keystoreProps = Properties()
+			keystoreProps.load(FileInputStream(file("keystore.properties")))
+			keyAlias = keystoreProps["keyAlias"] as String
+			keyPassword = keystoreProps["keyPassword"] as String
+			storePassword = keystoreProps["storePassword"] as String
+			storeFile = file("keystore.jks")
+		}
+	}
 	namespace = "com.github.corentinc.httpcodescats"
 	compileSdk = 34
 
@@ -16,7 +29,7 @@ android {
 		applicationId = "com.github.corentinc.httpcodescats"
 		minSdk = 26
 		targetSdk = 34
-		versionCode = 1
+		versionCode = 2
 		versionName = "1.0.0"
 
 		testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -27,11 +40,12 @@ android {
 
 	buildTypes {
 		release {
-			isMinifyEnabled = false
+			isMinifyEnabled = true
 			proguardFiles(
 				getDefaultProguardFile("proguard-android-optimize.txt"),
 				"proguard-rules.pro"
 			)
+			signingConfig = signingConfigs.getByName("release")
 		}
 	}
 	compileOptions {
