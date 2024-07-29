@@ -3,6 +3,8 @@ plugins {
 	alias(libs.plugins.jetbrains.kotlin.android)
 	alias(libs.plugins.compose.compiler)
 	alias(libs.plugins.hilt)
+	alias(libs.plugins.google.services)
+	alias(libs.plugins.firebase.crashlytics)
 	id("kotlin-kapt")
 }
 
@@ -15,7 +17,7 @@ android {
 		minSdk = 26
 		targetSdk = 34
 		versionCode = 1
-		versionName = "1.0"
+		versionName = "1.0.0"
 
 		testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 		vectorDrawables {
@@ -76,6 +78,12 @@ dependencies {
 	kapt(libs.hilt.android.compiler)
 	implementation(libs.glide)
 	implementation(libs.customTabs)
+
+	// Firebase
+	implementation(platform(libs.firebase.bom))
+	implementation(libs.firebase.analytics)
+	implementation(libs.firebase.crashlytics)
+
 }
 
 kapt {

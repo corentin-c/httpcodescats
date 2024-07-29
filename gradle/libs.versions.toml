@@ -13,6 +13,9 @@ composeBom = "2024.06.00"
 navigationCompose = "2.7.7"
 glide = "1.0.0-beta01"
 customTabs = "1.8.0"
+googleServices = "4.4.2"
+firebaseBom = "33.1.2"
+firebaseCrashlytics = "3.0.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,9 +38,14 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 glide = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glide" }
 customTabs = { group = "androidx.browser", name = "browser", version.ref = "customTabs" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics"}
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlytics" }

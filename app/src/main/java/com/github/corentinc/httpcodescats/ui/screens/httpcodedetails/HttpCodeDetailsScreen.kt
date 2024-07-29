@@ -88,7 +88,7 @@ fun HttpCodeDetailsContent(
 				horizontalAlignment = Alignment.CenterHorizontally
 			) {
 				Text(
-					text = "HTTP code : ",
+					text = "HTTP status code : ",
 					textDecoration = TextDecoration.Underline,
 					textAlign = TextAlign.Center,
 					style = MaterialTheme.typography.titleMedium

@@ -99,7 +99,7 @@ fun HttpCodeListScreenContent(
 					trailingIcon = {
 						Icon(
 							imageVector = Icons.Default.Search,
-							contentDescription = "Search for http code"
+							contentDescription = "Search for http status code"
 						)
 					}),
 			)
@@ -176,7 +176,7 @@ fun HttpCodeListScreenContent(
 						})
 				} else {
 					Text(
-						text = "No corresponding HTTP Code, search for something else like \"400\" !",
+						text = "No corresponding HTTP status code, search for something else like \"400\" !",
 						textAlign = TextAlign.Center
 					)
 				}
