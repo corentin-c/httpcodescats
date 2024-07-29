@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.corentinc.httpcodescats.ui.LinkText
 import com.github.corentinc.httpcodescats.ui.LinkTextData
+import com.github.corentinc.httpcodescats.ui.theme.HttpCodesCatsTheme
 
 @Composable
 fun AboutScreen() {
@@ -52,7 +53,7 @@ fun AboutScreen() {
 				),
 				LinkTextData(
 					text = "HTTP Cats website",
-					tag = "Create new scratch file from selection",
+					tag = "HTTP Cats website",
 					annotation = "https://http.cat/",
 					onClick = {
 						val intent = CustomTabsIntent.Builder()
@@ -116,5 +117,7 @@ fun AboutScreen() {
 @Composable
 @Preview(showBackground = true)
 fun AboutScreenPreview() {
-	AboutScreen()
+	HttpCodesCatsTheme {
+		AboutScreen()
+	}
 }

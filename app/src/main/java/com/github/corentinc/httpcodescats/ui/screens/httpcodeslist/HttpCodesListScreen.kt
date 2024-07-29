@@ -94,8 +94,7 @@ fun HttpCodeListScreenContent(
 				},
 				classicFieldExtraParameters = ClassicFieldExtraParameters(
 					keyboardOptions = KeyboardOptions(
-						keyboardType = KeyboardType.Number,
-						imeAction = ImeAction.Go
+						keyboardType = KeyboardType.Number
 					),
 					trailingIcon = {
 						Icon(

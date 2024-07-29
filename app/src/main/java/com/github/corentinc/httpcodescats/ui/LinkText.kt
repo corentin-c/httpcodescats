@@ -1,6 +1,7 @@
 package com.github.corentinc.httpcodescats.ui
 
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -66,7 +67,7 @@ private fun createAnnotatedString(data: List<LinkTextData>): AnnotatedString {
 			} else {
 				withStyle(
 					style = SpanStyle(
-						color = MaterialTheme.colorScheme.onBackground,
+						color = LocalContentColor.current,
 					),
 				) {
 					append(linkTextData.text)
