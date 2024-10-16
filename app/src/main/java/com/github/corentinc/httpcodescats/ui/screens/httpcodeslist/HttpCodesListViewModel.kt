@@ -2,7 +2,7 @@ package com.github.corentinc.httpcodescats.ui.screens.httpcodeslist
 
 import androidx.lifecycle.ViewModel
 import com.github.corentinc.httpcodescats.model.HttpCode
-import com.github.corentinc.httpcodescats.repository.IHttpCodesRepository
+import com.github.corentinc.httpcodescats.usecase.IHttpCodesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HttpCodesListViewModel @Inject constructor(
-	private val httpCodesRepository: IHttpCodesRepository
+	private val httpCodesUseCase: IHttpCodesUseCase
 ) : ViewModel() {
 	private val uiStateFlow = MutableStateFlow(UiState())
 	val uiState: StateFlow<UiState> = uiStateFlow.asStateFlow()
@@ -20,7 +20,7 @@ class HttpCodesListViewModel @Inject constructor(
 	fun onStart() {
 		uiStateFlow.update {
 			it.copy(
-				httpCodes = httpCodesRepository.getAllHttpCodes(),
+				httpCodes = httpCodesUseCase.getAllHttpCodes(),
 				isLoading = false
 			)
 		}
@@ -29,9 +29,7 @@ class HttpCodesListViewModel @Inject constructor(
 	fun onFilterChanged(newValue: String) {
 		uiStateFlow.update {
 			it.copy(
-				httpCodes = httpCodesRepository.getAllHttpCodes().filter { httpCode ->
-					httpCode.code.toString().startsWith(newValue)
-				},
+				httpCodes = httpCodesUseCase.filterHttpCodes(newValue),
 				isLoading = false,
 				filter = newValue
 			)

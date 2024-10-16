@@ -28,7 +28,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -191,7 +190,23 @@ fun HttpCodeListScreenPreviewWithContent() {
 	HttpCodesCatsTheme {
 		HttpCodeListScreenContent(
 			isLoading = false,
-			httpCodes = HttpCode.httpCodes,
+			httpCodes = listOf(
+				HttpCode(
+					100,
+					"Continue",
+					"This interim response indicates that the client should continue the request or ignore the response if the request is already finished."
+				),
+				HttpCode(
+					101,
+					"Switching Protocols",
+					"This code is sent in response to an Upgrade request header from the client and indicates the protocol the server is switching to."
+				),
+				HttpCode(
+					102,
+					"Processing",
+					"This code indicates that the server has received and is processing the request, but no response is available yet."
+				)
+			),
 			filter = "",
 			onHttpCodeClicked = {
 				// empty

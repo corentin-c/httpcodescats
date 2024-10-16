@@ -4,5 +4,4 @@ import com.github.corentinc.httpcodescats.model.HttpCode
 
 interface IHttpCodesRepository {
 	fun getAllHttpCodes(): List<HttpCode>
-	fun getHttpCode(code: Int): HttpCode?
 }
