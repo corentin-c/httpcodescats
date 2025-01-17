@@ -1,8 +1,10 @@
 package com.github.corentinc.httpcodescats.ui.navigation
 
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -25,7 +27,8 @@ fun NavigationController() {
 	Surface(color = MaterialTheme.colorScheme.surface) {
 		NavHost(
 			navController = navigationController,
-			startDestination = HTTP_CODE_LIST_SCREEN
+			startDestination = HTTP_CODE_LIST_SCREEN,
+			modifier = Modifier.safeDrawingPadding()
 		) {
 			composable(
 				route = HTTP_CODE_LIST_SCREEN,
