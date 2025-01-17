@@ -1,5 +1,7 @@
 package com.github.corentinc.httpcodescats.injection
 
+import com.github.corentinc.httpcodescats.coroutines.DispatcherProvider
+import com.github.corentinc.httpcodescats.coroutines.IDispatcherProvider
 import com.github.corentinc.httpcodescats.repository.HttpCodesRepository
 import com.github.corentinc.httpcodescats.repository.IHttpCodesRepository
 import com.github.corentinc.httpcodescats.usecase.HttpCodesUseCase
@@ -13,6 +15,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 interface ApplicationModule {
+	@Binds
+	@Singleton
+	fun provideDispatcherProvider(dispatcherProvider: DispatcherProvider): IDispatcherProvider
 
 	@Binds
 	@Singleton
