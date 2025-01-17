@@ -32,13 +32,12 @@ class HttpCodesListViewModel @Inject constructor(
 		}
 	}
 
-	fun onFilterChanged(newValue: String) {
+	fun onFilterChanged(filter: String) {
 		viewModelScope.launch(dispatcherProvider.io()) {
 			uiStateFlow.update {
 				it.copy(
-					httpCodes = httpCodesUseCase.filterHttpCodes(newValue),
-					isLoading = false,
-					filter = newValue
+					httpCodes = httpCodesUseCase.filterHttpCodes(filter),
+					isLoading = false
 				)
 			}
 		}
@@ -47,6 +46,5 @@ class HttpCodesListViewModel @Inject constructor(
 	data class UiState(
 		var httpCodes: List<HttpCode> = emptyList(),
 		var isLoading: Boolean = true,
-		var filter: String = ""
 	)
 }

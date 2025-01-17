@@ -25,6 +25,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -51,12 +55,10 @@ fun HttpCodeListScreen(
 	val uiState = viewModel.uiState.collectAsState().value
 	LaunchedEffect(key1 = Unit) {
 		viewModel.onStart()
-		viewModel.onFilterChanged(uiState.filter)
 	}
 	HttpCodeListScreenContent(
 		isLoading = uiState.isLoading,
 		httpCodes = uiState.httpCodes,
-		filter = uiState.filter,
 		onHttpCodeClicked = onHttpCodeClicked,
 		onAboutClicked = onAboutClicked,
 		onFilterChanged = { newFilter ->
@@ -69,7 +71,6 @@ fun HttpCodeListScreen(
 fun HttpCodeListScreenContent(
 	isLoading: Boolean,
 	httpCodes: List<HttpCode>,
-	filter: String,
 	onHttpCodeClicked: (code: Int) -> Unit,
 	onAboutClicked: () -> Unit,
 	onFilterChanged: (newFilter: String) -> Unit
@@ -84,16 +85,18 @@ fun HttpCodeListScreenContent(
 			horizontalArrangement = Arrangement.SpaceEvenly,
 			verticalAlignment = Alignment.CenterVertically
 		) {
+			var filter by remember { mutableStateOf("") }
 			ClassicField(
 				modifier = Modifier.padding(12.dp),
-				placeholder = "Search for a code...",
+				placeholder = "Search for a code or a word",
 				value = filter,
 				onValueChange = { value ->
+					filter = value
 					onFilterChanged(value)
 				},
 				classicFieldExtraParameters = ClassicFieldExtraParameters(
 					keyboardOptions = KeyboardOptions(
-						keyboardType = KeyboardType.Number
+						keyboardType = KeyboardType.Text
 					),
 					trailingIcon = {
 						Icon(
@@ -207,7 +210,6 @@ fun HttpCodeListScreenPreviewWithContent() {
 					"This code indicates that the server has received and is processing the request, but no response is available yet."
 				)
 			),
-			filter = "",
 			onHttpCodeClicked = {
 				// empty
 			},
@@ -227,7 +229,6 @@ fun HttpCodeListScreenPreviewLoading() {
 		HttpCodeListScreenContent(
 			isLoading = true,
 			httpCodes = emptyList(),
-			filter = "",
 			onHttpCodeClicked = {
 				// empty
 			},
@@ -247,7 +248,6 @@ fun HttpCodeListScreenPreviewEmpty() {
 		HttpCodeListScreenContent(
 			isLoading = false,
 			httpCodes = emptyList(),
-			filter = "",
 			onHttpCodeClicked = {
 				// empty
 			},
