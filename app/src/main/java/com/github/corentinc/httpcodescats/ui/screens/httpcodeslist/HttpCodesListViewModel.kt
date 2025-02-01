@@ -20,12 +20,19 @@ class HttpCodesListViewModel @Inject constructor(
 ) : ViewModel() {
 	private val uiStateFlow = MutableStateFlow(UiState())
 	val uiState: StateFlow<UiState> = uiStateFlow.asStateFlow()
+	private lateinit var allHttpCodes: List<HttpCode>
 
-	fun onStart() {
+	init {
+		onStart()
+	}
+
+	private fun onStart() {
 		viewModelScope.launch(dispatcherProvider.io()) {
+			val httpCodes = httpCodesUseCase.getAllHttpCodes()
+			allHttpCodes = httpCodes
 			uiStateFlow.update {
 				it.copy(
-					httpCodes = httpCodesUseCase.getAllHttpCodes(),
+					httpCodes = httpCodes,
 					isLoading = false
 				)
 			}
@@ -33,11 +40,12 @@ class HttpCodesListViewModel @Inject constructor(
 	}
 
 	fun onFilterChanged(filter: String) {
-		viewModelScope.launch(dispatcherProvider.io()) {
+		if(::allHttpCodes.isInitialized) {
 			uiStateFlow.update {
 				it.copy(
-					httpCodes = httpCodesUseCase.filterHttpCodes(filter),
-					isLoading = false
+					httpCodes = httpCodesUseCase.filterHttpCodes(allHttpCodes, filter),
+					isLoading = false,
+					filter = filter
 				)
 			}
 		}
@@ -46,5 +54,6 @@ class HttpCodesListViewModel @Inject constructor(
 	data class UiState(
 		var httpCodes: List<HttpCode> = emptyList(),
 		var isLoading: Boolean = true,
+		var filter: String = ""
 	)
 }

@@ -9,8 +9,8 @@ class HttpCodesUseCase @Inject constructor(
 ) : IHttpCodesUseCase {
 	override suspend fun getAllHttpCodes() = httpCodesRepository.getAllHttpCodes()
 
-	override suspend fun filterHttpCodes(filter: String): List<HttpCode> {
-		return httpCodesRepository.getAllHttpCodes().filter { httpCode ->
+	override fun filterHttpCodes(originalList: List<HttpCode>, filter: String): List<HttpCode> {
+		return originalList.filter { httpCode ->
 			httpCode.code.toString().contains(filter, ignoreCase = true)
 					|| httpCode.name.contains(filter, ignoreCase = true)
 					|| httpCode.description.contains(filter, ignoreCase = true)

@@ -23,12 +23,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -53,12 +48,11 @@ fun HttpCodeListScreen(
 	onAboutClicked: () -> Unit
 ) {
 	val uiState = viewModel.uiState.collectAsState().value
-	LaunchedEffect(key1 = Unit) {
-		viewModel.onStart()
-	}
+
 	HttpCodeListScreenContent(
 		isLoading = uiState.isLoading,
 		httpCodes = uiState.httpCodes,
+		filter = uiState.filter,
 		onHttpCodeClicked = onHttpCodeClicked,
 		onAboutClicked = onAboutClicked,
 		onFilterChanged = { newFilter ->
@@ -71,6 +65,7 @@ fun HttpCodeListScreen(
 fun HttpCodeListScreenContent(
 	isLoading: Boolean,
 	httpCodes: List<HttpCode>,
+	filter: String = "",
 	onHttpCodeClicked: (code: Int) -> Unit,
 	onAboutClicked: () -> Unit,
 	onFilterChanged: (newFilter: String) -> Unit
@@ -85,15 +80,14 @@ fun HttpCodeListScreenContent(
 			horizontalArrangement = Arrangement.SpaceEvenly,
 			verticalAlignment = Alignment.CenterVertically
 		) {
-			var filter by remember { mutableStateOf("") }
 			ClassicField(
 				modifier = Modifier.padding(12.dp),
 				placeholder = "Search for a code or a word",
 				value = filter,
 				onValueChange = { value ->
-					filter = value
 					onFilterChanged(value)
 				},
+				enabled = !isLoading,
 				classicFieldExtraParameters = ClassicFieldExtraParameters(
 					keyboardOptions = KeyboardOptions(
 						keyboardType = KeyboardType.Text
