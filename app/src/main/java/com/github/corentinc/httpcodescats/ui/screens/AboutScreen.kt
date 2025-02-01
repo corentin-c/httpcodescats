@@ -1,7 +1,5 @@
 package com.github.corentinc.httpcodescats.ui.screens
 
-import android.net.Uri
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.corentinc.httpcodescats.ui.LinkText
@@ -24,7 +21,6 @@ import com.github.corentinc.httpcodescats.ui.theme.HttpCodesCatsTheme
 
 @Composable
 fun AboutScreen() {
-	val context = LocalContext.current
 	Column(
 		verticalArrangement = Arrangement.Center,
 		horizontalAlignment = Alignment.CenterHorizontally,
@@ -55,11 +51,6 @@ fun AboutScreen() {
 					text = "HTTP Cats website",
 					tag = "HTTP Cats website",
 					annotation = "https://http.cat/",
-					onClick = {
-						val intent = CustomTabsIntent.Builder()
-							.build()
-						intent.launchUrl(context, Uri.parse(it.item))
-					},
 				),
 				LinkTextData(". Thank you so much for this amazing website !")
 			)
@@ -74,11 +65,6 @@ fun AboutScreen() {
 					text = "Mozilla developer website",
 					tag = "Mozilla developer website",
 					annotation = "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status",
-					onClick = {
-						val intent = CustomTabsIntent.Builder()
-							.build()
-						intent.launchUrl(context, Uri.parse(it.item))
-					},
 				),
 				LinkTextData(".")
 			)
@@ -93,11 +79,6 @@ fun AboutScreen() {
 					text = "Github",
 					tag = "Github",
 					annotation = "https://github.com/corentin-c/httpcodescats",
-					onClick = {
-						val intent = CustomTabsIntent.Builder()
-							.build()
-						intent.launchUrl(context, Uri.parse(it.item))
-					},
 				),
 				LinkTextData(". "),
 				LinkTextData(

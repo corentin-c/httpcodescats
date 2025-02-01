@@ -35,3 +35,4 @@ app/google-services.json
 /app/release/*
 /app/src/main/java/com/github/corentinc/httpcodescats/keystore.properties
 /app/keystore.properties
+/app/src/google-services.json

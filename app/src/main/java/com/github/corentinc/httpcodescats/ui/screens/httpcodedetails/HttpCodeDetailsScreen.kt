@@ -1,7 +1,5 @@
 package com.github.corentinc.httpcodescats.ui.screens.httpcodedetails
 
-import android.net.Uri
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,7 +15,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -55,7 +52,6 @@ fun HttpCodeDetailsContent(
 	isLoading: Boolean,
 	httpCode: HttpCode?
 ) {
-	val context = LocalContext.current
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -129,11 +125,6 @@ fun HttpCodeDetailsContent(
 							text = "Open source in browser",
 							tag = "source",
 							annotation = httpCode.source,
-							onClick = {
-								val intent = CustomTabsIntent.Builder()
-									.build()
-								intent.launchUrl(context, Uri.parse(it.item))
-							},
 						)
 					)
 				)
