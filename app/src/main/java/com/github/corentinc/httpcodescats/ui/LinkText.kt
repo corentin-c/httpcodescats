@@ -1,6 +1,8 @@
 package com.github.corentinc.httpcodescats.ui
 
+import android.content.ActivityNotFoundException
 import android.net.Uri
+import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.text.BasicText
@@ -43,9 +45,13 @@ fun LinkText(
                     start = offset,
                     end = offset,
                 ).firstOrNull()?.let {
-					val intent = CustomTabsIntent.Builder()
-						.build()
-					intent.launchUrl(context, Uri.parse(it.item))
+					try {
+						val intent = CustomTabsIntent.Builder()
+							.build()
+						intent.launchUrl(context, Uri.parse(it.item))
+					} catch (exception: ActivityNotFoundException) {
+						Toast.makeText(context, "Please install Chrome", Toast.LENGTH_LONG).show()
+					}
                 }
             }
         }
