@@ -67,7 +67,6 @@ android {
 }
 
 dependencies {
-
 	implementation(libs.androidx.core.ktx)
 	implementation(libs.androidx.lifecycle.runtime.ktx)
 	implementation(libs.androidx.activity.compose)
@@ -77,10 +76,6 @@ dependencies {
 	implementation(libs.androidx.ui.tooling.preview)
 	implementation(libs.androidx.material3)
 	implementation(libs.androidx.navigation.compose)
-	testImplementation(libs.junit)
-	androidTestImplementation(libs.androidx.junit)
-	androidTestImplementation(libs.androidx.espresso.core)
-	androidTestImplementation(libs.androidx.ui.test.junit4)
 	debugImplementation(libs.androidx.ui.tooling)
 	debugImplementation(libs.androidx.ui.test.manifest)
 	implementation(libs.hilt.android)
@@ -94,5 +89,12 @@ dependencies {
 	implementation(libs.firebase.analytics)
 	implementation(libs.firebase.crashlytics)
 	implementation(libs.firebase.firestore)
+
+	// Tests
+	testImplementation(libs.junit.junit)
+	testImplementation(libs.mockk)
+	testImplementation(libs.junit.jupiter)
+	testImplementation(libs.assertJCore)
+	testImplementation(libs.kotlinx.coroutines.test)
 
 }
