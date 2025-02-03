@@ -48,13 +48,23 @@ android {
 			signingConfig = signingConfigs.getByName("release")
 		}
 	}
+
 	compileOptions {
 		sourceCompatibility = JavaVersion.VERSION_21
 		targetCompatibility = JavaVersion.VERSION_21
 	}
+
 	kotlinOptions {
 		jvmTarget = "21"
 	}
+
+	@Suppress("UnstableApiUsage")
+	testOptions {
+		unitTests.all {
+			it.useJUnitPlatform()
+		}
+	}
+
 	buildFeatures {
 		compose = true
 	}
@@ -91,7 +101,6 @@ dependencies {
 	implementation(libs.firebase.firestore)
 
 	// Tests
-	testImplementation(libs.junit.junit)
 	testImplementation(libs.mockk)
 	testImplementation(libs.junit.jupiter)
 	testImplementation(libs.assertJCore)

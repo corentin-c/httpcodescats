@@ -44,7 +44,6 @@ class HttpCodesListViewModel @Inject constructor(
 			uiStateFlow.update {
 				it.copy(
 					httpCodes = httpCodesUseCase.filterHttpCodes(allHttpCodes, filter),
-					isLoading = false,
 					filter = filter
 				)
 			}

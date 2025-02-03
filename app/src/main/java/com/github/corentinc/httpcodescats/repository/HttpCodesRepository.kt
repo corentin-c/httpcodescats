@@ -10,15 +10,8 @@ private const val NAME_FILED = "name"
 private const val DESCRIPTION_FILED = "description"
 
 class HttpCodesRepository @Inject constructor() : IHttpCodesRepository {
-	private lateinit var httpCodesCached: List<HttpCode>
 
 	override suspend fun getAllHttpCodes(): List<HttpCode> {
-		return if (::httpCodesCached.isInitialized) {
-			httpCodesCached
-		} else getHttpCodes()
-	}
-
-	private suspend fun getHttpCodes(): List<HttpCode> {
 		val firestoreInstance = FirebaseFirestore.getInstance()
 		return firestoreInstance
 			.collection(HTTP_CODES_COLLECTION)
