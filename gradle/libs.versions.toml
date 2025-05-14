@@ -13,7 +13,7 @@ customTabs = "1.8.0"
 googleServices = "4.4.2"
 firebaseBom = "33.13.0"
 firebaseCrashlytics = "3.0.3"
-ksp = "2.1.20-2.0.1"
+ksp = "2.1.21-2.0.1"
 mockk = "1.14.2"
 junitJupiter = "5.12.0"
 assertJCoreVersion = "3.27.3"
@@ -41,7 +41,9 @@ firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics"}
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore"}
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk"}
-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
+junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junitJupiter" }
+junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter"}
+junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher"}
 assertJCore = { group = "org.assertj", name = "assertj-core", version.ref = "assertJCoreVersion" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTestVersion" }
 
