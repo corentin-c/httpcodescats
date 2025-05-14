@@ -58,7 +58,6 @@ android {
 		jvmTarget = "21"
 	}
 
-	@Suppress("UnstableApiUsage")
 	testOptions {
 		unitTests.all {
 			it.useJUnitPlatform()
