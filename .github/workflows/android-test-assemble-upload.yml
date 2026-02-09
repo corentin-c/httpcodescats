@@ -2,9 +2,6 @@ name: Android test, run quality, build and publish on Firebase
 
 on:
   workflow_dispatch:
-  pull_request:
-    branches:
-      - main
 
 jobs:
   build:
