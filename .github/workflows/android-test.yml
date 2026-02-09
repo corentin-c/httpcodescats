@@ -1,11 +1,11 @@
 name: Android test and quality
 
 on:
-  workflow_dispatch:
   schedule:
     - cron: "30 5 1 1-12 *" // every first of the month
   pull_request:
     branches: ["main"]
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
