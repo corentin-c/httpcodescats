@@ -13,7 +13,7 @@ runs:
       run: chmod +x gradlew
       shell: bash
     - name: Create file
-      run: cat /home/runner/work/httpcodescats/httpcodescats/app/src/debug/google-services.json
+      run: touch /home/runner/work/httpcodescats/httpcodescats/app/src/debug/google-services.json
       shell: bash
     - name: Putting data
       env:
