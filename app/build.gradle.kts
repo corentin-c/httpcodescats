@@ -1,9 +1,9 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
 	alias(libs.plugins.android.application)
-	alias(libs.plugins.jetbrains.kotlin.android)
 	alias(libs.plugins.compose.compiler)
 	alias(libs.plugins.hilt)
 	alias(libs.plugins.google.services)
@@ -23,12 +23,12 @@ android {
 		}
 	}
 	namespace = "com.github.corentinc.httpcodescats"
-	compileSdk = 35
+	compileSdk = 36
 
 	defaultConfig {
 		applicationId = "com.github.corentinc.httpcodescats"
 		minSdk = 26
-		targetSdk = 35
+		targetSdk = 36
 		versionCode = 6
 		versionName = "1.1.2"
 
@@ -54,8 +54,10 @@ android {
 		targetCompatibility = JavaVersion.VERSION_21
 	}
 
-	kotlinOptions {
-		jvmTarget = "21"
+	kotlin {
+		compilerOptions {
+			jvmTarget = JvmTarget.JVM_21
+		}
 	}
 
 	testOptions {
@@ -92,6 +94,7 @@ dependencies {
 	ksp(libs.hilt.android.compiler)
 	implementation(libs.glide)
 	implementation(libs.customTabs)
+	implementation(libs.material.icons.core)
 
 	// Firebase
 	implementation(platform(libs.firebase.bom))

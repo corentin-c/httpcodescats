@@ -1,0 +1,8 @@
+name: build
+
+runs:
+  using: "composite"
+  steps:
+    - name: Assemble debug
+      run: ./gradlew assembleDebug
+      shell: bash

@@ -12,7 +12,7 @@ private const val THREE_HUNDRED_MILLISECONDS_DURATION = 300
 
 val enterTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?) = {
 	slideIntoContainer(
-		towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
+		towards = AnimatedContentTransitionScope.SlideDirection.Left,
 		animationSpec = tween(THREE_HUNDRED_MILLISECONDS_DURATION)
 	)
 }
@@ -20,7 +20,7 @@ val enterTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> En
 val popEnterTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?) =
 	{
 		slideIntoContainer(
-			towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
+			towards = AnimatedContentTransitionScope.SlideDirection.Right,
 			animationSpec = tween(THREE_HUNDRED_MILLISECONDS_DURATION)
 		)
 	}

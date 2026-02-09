@@ -1,0 +1,22 @@
+name: Android test, run quality, build and publish on Firebase
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup
+        uses: "./.github/templates/setup"
+      - name: Run tests
+        uses: "./.github/templates/test"
+      - name: Build APK
+        uses: "./.github/templates/assemble"
+      - name: Upload on Github
+        uses: "./.github/templates/upload"

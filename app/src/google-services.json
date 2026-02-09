@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "282921055641",
+    "project_id": "http-codes-cats",
+    "storage_bucket": "http-codes-cats.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:282921055641:android:65c87b1e99c1c3a4214f08",
+        "android_client_info": {
+          "package_name": "com.github.corentinc.httpcodescats"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7RMOV5qaPaGX1o3unL-Dk48zpdxAuuuY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

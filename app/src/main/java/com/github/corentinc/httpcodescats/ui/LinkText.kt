@@ -49,7 +49,7 @@ fun LinkText(
 						val intent = CustomTabsIntent.Builder()
 							.build()
 						intent.launchUrl(context, Uri.parse(it.item))
-					} catch (exception: ActivityNotFoundException) {
+					} catch (_: ActivityNotFoundException) {
 						Toast.makeText(context, "Please install Chrome", Toast.LENGTH_LONG).show()
 					}
                 }
