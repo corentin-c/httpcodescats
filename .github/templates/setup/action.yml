@@ -13,10 +13,10 @@ runs:
       run: chmod +x gradlew
       shell: bash
     - name: Create file
-      run: touch /home/runner/work/httpcodescats/httpcodescats/app/src/main/google-services.json
+      run: touch /home/runner/work/httpcodescats/httpcodescats/app/src/google-services.json
       shell: bash
     - name: Putting data
       env:
         DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
-      run: echo $DATA > /home/runner/work/httpcodescats/httpcodescats/app/src/main/google-services.json
+      run: echo $DATA > /home/runner/work/httpcodescats/httpcodescats/app/src/google-services.json
       shell: bash
