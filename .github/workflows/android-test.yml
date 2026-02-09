@@ -1,4 +1,4 @@
-name: Android test and quality
+name: Android test
 
 on:
   workflow_dispatch:
