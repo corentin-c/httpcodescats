@@ -1,0 +1,26 @@
+name: Android test and quality
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 5 1 1-12 *" // every first of the month
+  pull_request:
+    branches: ["main"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-lastest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup
+        uses: "./.github/templates/setup"
+      - name: Run tests
+        uses: "./.github/templates/test"
