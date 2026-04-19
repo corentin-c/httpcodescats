@@ -29,8 +29,8 @@ android {
 		applicationId = "com.github.corentinc.httpcodescats"
 		minSdk = 26
 		targetSdk = 36
-		versionCode = 6
-		versionName = "1.1.2"
+		versionCode = 7
+		versionName = "1.1.3"
 
 		testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 		vectorDrawables {
@@ -54,12 +54,6 @@ android {
 		targetCompatibility = JavaVersion.VERSION_21
 	}
 
-	kotlin {
-		compilerOptions {
-			jvmTarget = JvmTarget.JVM_21
-		}
-	}
-
 	testOptions {
 		unitTests.all {
 			it.useJUnitPlatform()
@@ -74,6 +68,13 @@ android {
 		resources {
 			excludes += "/META-INF/{AL2.0,LGPL2.1}"
 		}
+	}
+}
+
+
+kotlin {
+	compilerOptions {
+		jvmTarget = JvmTarget.JVM_21
 	}
 }
 
