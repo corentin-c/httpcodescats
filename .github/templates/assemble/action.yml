@@ -3,6 +3,6 @@ name: build
 runs:
   using: "composite"
   steps:
-    - name: Assemble debug
-      run: ./gradlew assembleDebug
+    - name: Assemble Release
+      run: ./gradlew assembleRelease
       shell: bash

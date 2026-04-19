@@ -1,4 +1,4 @@
-name: Android test, run quality, build and publish on Firebase
+name: Android test, run quality, build and upload
 
 on:
   workflow_dispatch:
